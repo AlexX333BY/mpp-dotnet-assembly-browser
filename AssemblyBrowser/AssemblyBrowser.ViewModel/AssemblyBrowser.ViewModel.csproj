@@ -41,7 +41,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyStringProcessor.cs" />
+    <Compile Include="DatatypeStringProcessor.cs" />
+    <Compile Include="FieldStringProcessor.cs" />
+    <Compile Include="IDeclaredElementStringProcessor.cs" />
+    <Compile Include="MethodStringProcessor.cs" />
+    <Compile Include="NamespaceStringProcessor.cs" />
+    <Compile Include="NoSuchDatatypeException.cs" />
+    <Compile Include="NoSuchMethodException.cs" />
+    <Compile Include="NoSuchNamespaceException.cs" />
+    <Compile Include="ParameterStringProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyStringProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssemblyBrowser.Model\AssemblyBrowser.Model.csproj">
+      <Project>{075f4708-d0bc-4aed-8599-0f4bcaa9257b}</Project>
+      <Name>AssemblyBrowser.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
