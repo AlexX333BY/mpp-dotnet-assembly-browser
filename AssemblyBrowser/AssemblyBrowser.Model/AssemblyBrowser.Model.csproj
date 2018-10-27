@@ -48,6 +48,7 @@
     <Compile Include="AssemblyNamespaceInfo.cs" />
     <Compile Include="AssemblyParameterInfo.cs" />
     <Compile Include="AssemblyPropertyInfo.cs" />
+    <Compile Include="IAccessable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

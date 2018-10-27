@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyDatatypeInfo
+    public class AssemblyDatatypeInfo : IAccessable
     {
         protected readonly Type typeInfo;
         protected List<AssemblyFieldInfo> datatypeFields;

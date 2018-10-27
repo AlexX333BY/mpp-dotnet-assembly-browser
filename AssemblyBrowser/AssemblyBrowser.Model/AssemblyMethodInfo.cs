@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyMethodInfo
+    public class AssemblyMethodInfo : IAccessable
     {
         protected List<AssemblyParameterInfo> methodParameters;
         protected readonly MethodInfo methodInfo;

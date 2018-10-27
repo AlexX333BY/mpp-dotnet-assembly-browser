@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyFieldInfo
+    public class AssemblyFieldInfo : IAccessable
     {
         protected readonly FieldInfo fieldInfo;
 
