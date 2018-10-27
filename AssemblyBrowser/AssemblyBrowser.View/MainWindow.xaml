@@ -5,8 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AssemblyBrowser.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Assembly Browser">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Menu x:Name="menu" Grid.Row="0" Grid.Column="0">
+            <MenuItem Header="File" VerticalAlignment="Center" Height="{Binding ElementName=menu,Path=ActualHeight}">
+                <MenuItem Header="Load"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label x:Name="namespaceLabel" VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="0" Grid.Column="0" Content="Namespace:"/>
+            <Label x:Name="datatypeLabel" VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="0" Grid.Column="1" Content="Datatype:"/>
+
+            <ComboBox x:Name="namespaceComboBox" VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" Grid.Column="0"/>
+            <ComboBox x:Name="datatypeComboBox" VerticalAlignment="Center" Margin="10,0,10,0" Grid.Row="1" Grid.Column="1"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label x:Name="fieldLabel" Margin="10,0,10,0" Grid.Row="0" Grid.Column="0" Content="Fields:"/>
+            <ListBox x:Name="fieldTextBox" Margin="10,10,10,10" Grid.Row="1" Grid.Column="0"></ListBox>
+
+            <Label x:Name="propertyLabel" Margin="10,0,10,0" Grid.Row="0" Grid.Column="1" Content="Properties:"/>
+            <ListBox x:Name="propertyTextBox" Margin="10,10,10,10" Grid.Row="1" Grid.Column="1"></ListBox>
+
+            <Label x:Name="methodLabel" Margin="10,0,10,0" Grid.Row="0" Grid.Column="2" Content="Methods:"/>
+            <ListBox x:Name="methoddTextBox" Margin="10,10,10,10" Grid.Row="1" Grid.Column="2"></ListBox>
+        </Grid>
     </Grid>
 </Window>
