@@ -42,7 +42,7 @@ namespace AssemblyBrowser.Model
 
         public bool IsPrivateProtected => methodInfo.IsFamilyAndAssembly;
 
-        public bool IsAbstract => methodInfo.IsAbstract;
+        public bool IsAbstract => methodInfo.IsAbstract && !methodInfo.DeclaringType.IsInterface;
 
         public bool IsAsync => methodInfo.GetCustomAttribute(typeof(AsyncStateMachineAttribute)) != null;
 
@@ -54,7 +54,7 @@ namespace AssemblyBrowser.Model
 
         public bool IsStatic => methodInfo.IsStatic;
 
-        public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden;
+        public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden && !methodInfo.DeclaringType.IsInterface;
 
         public AssemblyMethodInfo(MethodInfo methodInfo)
         {

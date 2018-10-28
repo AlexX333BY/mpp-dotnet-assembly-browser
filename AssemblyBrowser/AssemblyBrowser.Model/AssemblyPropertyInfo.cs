@@ -43,6 +43,11 @@ namespace AssemblyBrowser.Model
         {
             get
             {
+                if (propertyInfo.DeclaringType.IsInterface)
+                {
+                    return false;
+                }
+
                 MethodInfo getMethodInfo = propertyInfo.GetGetMethod(true);
                 if (getMethodInfo != null)
                 {
@@ -97,6 +102,11 @@ namespace AssemblyBrowser.Model
         {
             get
             {
+                if (propertyInfo.DeclaringType.IsInterface)
+                {
+                    return false;
+                }
+
                 MethodInfo methodInfo = propertyInfo.GetGetMethod(true);
                 if (methodInfo != null)
                 {
