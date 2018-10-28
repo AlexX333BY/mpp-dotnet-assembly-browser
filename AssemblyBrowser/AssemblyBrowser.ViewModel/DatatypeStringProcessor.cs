@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using AssemblyBrowser.Model;
 
 namespace AssemblyBrowser.ViewModel
@@ -36,7 +37,14 @@ namespace AssemblyBrowser.ViewModel
             List<string> fields = new List<string>();
             foreach (AssemblyFieldInfo fieldInfo in datatypeInfo.Fields)
             {
-                fields.Add(new FieldStringProcessor(fieldInfo).GetDeclaration(modifiersDelimiter));
+                try
+                {
+                    fields.Add(new FieldStringProcessor(fieldInfo).GetDeclaration(modifiersDelimiter));
+                }
+                catch (FileNotFoundException)
+                {
+                    // handling error of loading non-available types
+                }
             }
             return fields;
         }
@@ -46,7 +54,14 @@ namespace AssemblyBrowser.ViewModel
             List<string> properties = new List<string>();
             foreach (AssemblyPropertyInfo propertyInfo in datatypeInfo.Properties)
             {
-                properties.Add(new PropertyStringProcessor(propertyInfo).GetDeclaration(modifiersDelimiter));
+                try
+                {
+                    properties.Add(new PropertyStringProcessor(propertyInfo).GetDeclaration(modifiersDelimiter));
+                }
+                catch (FileNotFoundException)
+                {
+                    // handling error of loading non-available types
+                }
             }
             return properties;
         }
@@ -56,7 +71,14 @@ namespace AssemblyBrowser.ViewModel
             List<string> methods = new List<string>();
             foreach (AssemblyMethodInfo methodInfo in datatypeInfo.Methods)
             {
-                methods.Add(new MethodStringProcessor(methodInfo).GetDeclaration(modifiersDelimiter));
+                try
+                {
+                    methods.Add(new MethodStringProcessor(methodInfo).GetDeclaration(modifiersDelimiter));
+                }
+                catch (FileNotFoundException)
+                {
+                    // handling error of loading non-available types
+                }
             }
             return methods;
         }
