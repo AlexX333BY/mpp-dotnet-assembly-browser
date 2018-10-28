@@ -20,7 +20,7 @@
         <Menu x:Name="menu" Grid.Row="0" Grid.Column="0">
             <MenuItem Header="File" VerticalAlignment="Center" Height="{Binding ElementName=menu,Path=ActualHeight}">
                 <MenuItem Header="Load" Command="{Binding LoadCommand}"/>
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
             </MenuItem>
         </Menu>
 

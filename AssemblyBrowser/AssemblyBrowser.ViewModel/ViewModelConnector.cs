@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System;
 
 namespace AssemblyBrowser.ViewModel
 {
@@ -18,8 +19,16 @@ namespace AssemblyBrowser.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
+        public AssemblyBrowserCommand ExitCommand
+        { get; protected set; }
+
         public AssemblyBrowserCommand LoadCommand
         { get; protected set; }
+
+        public void ShutdownApp(object o)
+        {
+            Environment.Exit(0);
+        }
 
         protected void LoadAssembly(object o)
         {
@@ -143,6 +152,7 @@ namespace AssemblyBrowser.ViewModel
             assembly = null;
             selectedNamespace = null;
             selectedDatatype = null;
+            ExitCommand = new AssemblyBrowserCommand(ShutdownApp);
             LoadCommand = new AssemblyBrowserCommand(LoadAssembly);
         }
     }
