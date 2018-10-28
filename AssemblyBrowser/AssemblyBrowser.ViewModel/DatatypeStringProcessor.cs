@@ -15,20 +15,36 @@ namespace AssemblyBrowser.ViewModel
                 AssemblyStringProcessor.CreateAccessModifier(datatypeInfo)
             };
 
-            if (datatypeInfo.IsStatic)
+            if (datatypeInfo.IsClass)
             {
-                modifiers.Add("static");
+                if (datatypeInfo.IsStatic)
+                {
+                    modifiers.Add("static");
+                }
+                if (datatypeInfo.IsAbstract)
+                {
+                    modifiers.Add("abstract");
+                }
+                if (datatypeInfo.IsSealed)
+                {
+                    modifiers.Add("sealed");
+                }
+                modifiers.Add("class");
             }
-            if (datatypeInfo.IsAbstract)
+            if (datatypeInfo.IsInterface)
             {
-                modifiers.Add("abstract");
+                modifiers.Add("interface");
             }
-            if (datatypeInfo.IsSealed)
+            if (datatypeInfo.IsStruct)
             {
-                modifiers.Add("sealed");
+                modifiers.Add("struct");
             }
-            modifiers.Add(datatypeInfo.Name);
+            if (datatypeInfo.IsEnum)
+            {
+                modifiers.Add("enum");
+            }
 
+            modifiers.Add(datatypeInfo.Name);
             return string.Join(modifiersDelimiter, modifiers);
         }
 

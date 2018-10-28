@@ -82,6 +82,14 @@ namespace AssemblyBrowser.Model
 
         public bool IsStatic => typeInfo.IsAbstract && typeInfo.IsSealed;
 
+        public bool IsInterface => typeInfo.IsInterface;
+
+        public bool IsEnum => typeInfo.IsEnum;
+
+        public bool IsStruct => typeInfo.IsValueType && !IsEnum;
+
+        public bool IsClass => typeInfo.IsClass && !IsInterface;
+
         public AssemblyDatatypeInfo(Type typeInfo)
         {
             this.typeInfo = typeInfo ?? throw new ArgumentException("Type info shouldn't be null");
