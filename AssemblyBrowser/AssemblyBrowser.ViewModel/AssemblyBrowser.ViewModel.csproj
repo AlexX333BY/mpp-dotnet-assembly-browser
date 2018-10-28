@@ -31,8 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyBrowserCommand.cs" />
     <Compile Include="AssemblyStringProcessor.cs" />
     <Compile Include="DatatypeStringProcessor.cs" />
     <Compile Include="FieldStringProcessor.cs" />
@@ -53,6 +56,7 @@
     <Compile Include="ParameterStringProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyStringProcessor.cs" />
+    <Compile Include="ViewModelConnector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AssemblyBrowser.Model\AssemblyBrowser.Model.csproj">

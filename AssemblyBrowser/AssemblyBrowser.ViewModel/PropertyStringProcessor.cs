@@ -47,7 +47,17 @@ namespace AssemblyBrowser.ViewModel
             }
             else
             {
-                modifiers.Add("{ get; set; }");
+                string postfix = "{ ";
+                if (propertyInfo.HasGetter)
+                {
+                    postfix += "get; ";
+                }
+                if (propertyInfo.HasSetter)
+                {
+                    postfix += "set; ";
+                }
+                postfix += "}";
+                modifiers.Add(postfix);
             }
 
             return string.Join(delimiter, modifiers);
@@ -117,7 +127,7 @@ namespace AssemblyBrowser.ViewModel
                 setter = "";
             }
 
-            return string.Format("{{0}{1} }", getter, setter);
+            return "{" + getter + setter + " }";
         }
 
         protected string CreatePropertyGetterAccessModifier(AssemblyPropertyInfo propertyInfo)

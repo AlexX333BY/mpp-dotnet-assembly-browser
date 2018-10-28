@@ -23,10 +23,11 @@ namespace AssemblyBrowser.ViewModel
                 parameter.Add("ref");
             }
 
+            parameter.Add(parameterInfo.Type);
             parameter.Add(parameterInfo.Name);
             if (parameterInfo.HasDefaultValue)
             {
-                parameter.Add(string.Format(" = {0}", parameterInfo.DefaultValue));
+                parameter.Add(string.Format("={0}{1}", modifiersDelimiter, parameterInfo.DefaultValue.ToString()));
             }
             return string.Join(modifiersDelimiter, parameter);
         }
