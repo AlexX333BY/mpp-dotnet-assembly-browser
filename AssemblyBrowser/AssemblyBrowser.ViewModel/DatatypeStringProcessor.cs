@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using AssemblyBrowser.Model;
 
@@ -45,6 +46,55 @@ namespace AssemblyBrowser.ViewModel
             }
 
             modifiers.Add(datatypeInfo.Name);
+
+            if (datatypeInfo.IsClass)
+            {
+                AssemblyDatatypeInfo baseType = datatypeInfo.BaseType;
+                List<AssemblyDatatypeInfo> interfaces = datatypeInfo.Interfaces;
+                if (!baseType.Name.Equals(nameof(Object)) || (interfaces.Count != 0))
+                {
+                    modifiers.Add(":");
+                }
+
+                if (!baseType.Name.Equals(nameof(Object)))
+                {
+                    if (interfaces.Count == 0)
+                    {
+                        modifiers.Add(baseType.Name);
+                    }
+                    else
+                    {
+                        modifiers.Add(baseType.Name + ",");
+                    }
+                }
+
+                for (int i = 0; i < interfaces.Count - 1; i++)
+                {
+                    modifiers.Add(interfaces[i].Name + ",");
+                }
+                if (interfaces.Count != 0)
+                {
+                    modifiers.Add(interfaces[interfaces.Count - 1].Name);
+                }
+            }
+
+            if (datatypeInfo.IsInterface)
+            {
+                List<AssemblyDatatypeInfo> interfaces = datatypeInfo.Interfaces;
+                if (interfaces.Count != 0)
+                {
+                    modifiers.Add(":");
+                }
+
+                for (int i = 0; i < interfaces.Count - 1; i++)
+                {
+                    modifiers.Add(interfaces[i].Name + ",");
+                }
+                if (interfaces.Count != 0)
+                {
+                    modifiers.Add(interfaces[interfaces.Count - 1].Name);
+                }
+            }
             return string.Join(modifiersDelimiter, modifiers);
         }
 

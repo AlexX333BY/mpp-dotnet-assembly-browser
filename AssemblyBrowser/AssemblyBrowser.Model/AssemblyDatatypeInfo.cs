@@ -10,6 +10,7 @@ namespace AssemblyBrowser.Model
         protected List<AssemblyFieldInfo> datatypeFields;
         protected List<AssemblyPropertyInfo> datatypeProperties;
         protected List<AssemblyMethodInfo> datatypeMethods;
+        protected List<AssemblyDatatypeInfo> interfaces;
 
         public List<AssemblyFieldInfo> Fields
         {
@@ -62,6 +63,24 @@ namespace AssemblyBrowser.Model
             }
         }
 
+        public List<AssemblyDatatypeInfo> Interfaces
+        {
+            get
+            {
+                if (interfaces == null)
+                {
+                    interfaces = new List<AssemblyDatatypeInfo>();
+                    foreach (Type type in typeInfo.GetInterfaces())
+                    {
+                        interfaces.Add(new AssemblyDatatypeInfo(type));
+                    }
+                }
+                return new List<AssemblyDatatypeInfo>(interfaces);
+            }
+        }
+
+        public AssemblyDatatypeInfo BaseType => new AssemblyDatatypeInfo(typeInfo.BaseType);
+
         public string Name => typeInfo.Name;
 
         public bool IsPublic => typeInfo.IsPublic;
@@ -96,6 +115,7 @@ namespace AssemblyBrowser.Model
             datatypeFields = null;
             datatypeProperties = null;
             datatypeMethods = null;
+            interfaces = null;
         }
     }
 }
