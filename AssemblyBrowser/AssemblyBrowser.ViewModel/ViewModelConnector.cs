@@ -93,8 +93,16 @@ namespace AssemblyBrowser.ViewModel
                 }
                 else
                 {
-                    string[] splittedDatatype = value.Split(' ');
-                    selectedDatatype = splittedDatatype[splittedDatatype.Length - 1];
+                    List<string> splittedDatatype = new List<string>(value.Split(' '));
+                    int indexOfInheritance = splittedDatatype.LastIndexOf(":");
+                    if (indexOfInheritance == -1)
+                    {
+                        selectedDatatype = splittedDatatype[splittedDatatype.Count - 1];
+                    }
+                    else
+                    {
+                        selectedDatatype = splittedDatatype[indexOfInheritance - 1];
+                    }
                 }
                 OnPropertyChanged(nameof(Fields));
                 OnPropertyChanged(nameof(Properties));
