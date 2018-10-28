@@ -17,7 +17,24 @@ namespace AssemblyBrowser.Model
             Assembly assembly = Assembly.LoadFile(assemblyPath);
             string namespaceName;
 
-            foreach (Type type in assembly.GetTypes())
+            Type[] types;
+            try
+            {
+                types = assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                List<Type> typeList = new List<Type>();
+                foreach (Type type in e.Types)
+                {
+                    if (type != null)
+                    {
+                        typeList.Add(type);
+                    }
+                }
+                types = typeList.ToArray();
+            }
+            foreach (Type type in types)
             {
                 namespaceName = type.Namespace;
                 if (namespaceName != null)

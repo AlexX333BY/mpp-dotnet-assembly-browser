@@ -15,29 +15,29 @@ namespace AssemblyBrowser.Model
 
         public bool HasSetter => propertyInfo.CanWrite;
 
-        public bool IsGetterPublic => HasGetter && propertyInfo.GetGetMethod().IsPublic;
+        public bool IsGetterPublic => HasGetter && propertyInfo.GetGetMethod(true).IsPublic;
 
-        public bool IsGetterProtected => HasGetter && propertyInfo.GetGetMethod().IsFamily;
+        public bool IsGetterProtected => HasGetter && propertyInfo.GetGetMethod(true).IsFamily;
 
-        public bool IsGetterInternal => HasGetter && propertyInfo.GetGetMethod().IsAssembly;
+        public bool IsGetterInternal => HasGetter && propertyInfo.GetGetMethod(true).IsAssembly;
 
-        public bool IsGetterProtectedInternal => HasGetter && propertyInfo.GetGetMethod().IsFamilyOrAssembly;
+        public bool IsGetterProtectedInternal => HasGetter && propertyInfo.GetGetMethod(true).IsFamilyOrAssembly;
 
-        public bool IsGetterPrivate => HasGetter && propertyInfo.GetGetMethod().IsPrivate;
+        public bool IsGetterPrivate => HasGetter && propertyInfo.GetGetMethod(true).IsPrivate;
 
-        public bool IsGetterPrivateProtected => HasGetter && propertyInfo.GetGetMethod().IsFamilyAndAssembly;
+        public bool IsGetterPrivateProtected => HasGetter && propertyInfo.GetGetMethod(true).IsFamilyAndAssembly;
 
-        public bool IsSetterPublic => HasSetter && propertyInfo.GetSetMethod().IsPublic;
+        public bool IsSetterPublic => HasSetter && propertyInfo.GetSetMethod(true).IsPublic;
 
-        public bool IsSetterProtected => HasSetter && propertyInfo.GetSetMethod().IsFamily;
+        public bool IsSetterProtected => HasSetter && propertyInfo.GetSetMethod(true).IsFamily;
 
-        public bool IsSetterInternal => HasSetter && propertyInfo.GetSetMethod().IsAssembly;
+        public bool IsSetterInternal => HasSetter && propertyInfo.GetSetMethod(true).IsAssembly;
 
-        public bool IsSetterProtectedInternal => HasSetter && propertyInfo.GetSetMethod().IsFamilyOrAssembly;
+        public bool IsSetterProtectedInternal => HasSetter && propertyInfo.GetSetMethod(true).IsFamilyOrAssembly;
 
-        public bool IsSetterPrivate => HasSetter && propertyInfo.GetSetMethod().IsPrivate;
+        public bool IsSetterPrivate => HasSetter && propertyInfo.GetSetMethod(true).IsPrivate;
 
-        public bool IsSetterPrivateProtected => HasSetter && propertyInfo.GetSetMethod().IsFamilyAndAssembly;
+        public bool IsSetterPrivateProtected => HasSetter && propertyInfo.GetSetMethod(true).IsFamilyAndAssembly;
 
         public bool IsAbstract
         {
@@ -57,7 +57,7 @@ namespace AssemblyBrowser.Model
             get
             {
                 MethodInfo methodInfo = propertyInfo.GetGetMethod(true);
-                if (propertyInfo.GetGetMethod(true) != null)
+                if (methodInfo != null)
                 {
                     return !methodInfo.Equals(methodInfo.GetBaseDefinition());
                 }
@@ -71,7 +71,7 @@ namespace AssemblyBrowser.Model
             get
             {
                 MethodInfo methodInfo = propertyInfo.GetGetMethod(true);
-                if (propertyInfo.GetGetMethod(true) != null)
+                if (methodInfo != null)
                 {
                     return methodInfo.IsVirtual && methodInfo.IsFinal;
                 }
@@ -98,12 +98,12 @@ namespace AssemblyBrowser.Model
             get
             {
                 MethodInfo methodInfo = propertyInfo.GetGetMethod(true);
-                if (propertyInfo.GetGetMethod(true) != null)
+                if (methodInfo != null)
                 {
-                    return methodInfo.IsVirtual && !methodInfo.IsFinal;
+                    return methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden;
                 }
                 methodInfo = propertyInfo.GetSetMethod(true);
-                return methodInfo.IsVirtual && !methodInfo.IsFinal;
+                return methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden;
             }
         }
 

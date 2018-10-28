@@ -52,7 +52,10 @@ namespace AssemblyBrowser.Model
                     datatypeMethods = new List<AssemblyMethodInfo>();
                     foreach (MethodInfo method in typeInfo.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                     {
-                        datatypeMethods.Add(new AssemblyMethodInfo(method));
+                        if (!method.Name.StartsWith("get_") && !method.Name.StartsWith("set_"))
+                        {
+                            datatypeMethods.Add(new AssemblyMethodInfo(method));
+                        }
                     }
                 }
                 return new List<AssemblyMethodInfo>(datatypeMethods);

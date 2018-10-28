@@ -17,7 +17,7 @@ namespace AssemblyBrowser.Model
 
         public bool IsRef => parameterInfo.ParameterType.IsByRef && !parameterInfo.IsOut;
 
-        public bool HasDefaultValue => !parameterInfo.IsOptional;
+        public bool HasDefaultValue => parameterInfo.IsOptional;
 
         public object DefaultValue => parameterInfo.DefaultValue;
 

@@ -54,7 +54,7 @@ namespace AssemblyBrowser.Model
 
         public bool IsStatic => methodInfo.IsStatic;
 
-        public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal;
+        public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden;
 
         public AssemblyMethodInfo(MethodInfo methodInfo)
         {
