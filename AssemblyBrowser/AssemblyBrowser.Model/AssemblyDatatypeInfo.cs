@@ -76,9 +76,9 @@ namespace AssemblyBrowser.Model
 
         public bool IsPrivateProtected => typeInfo.GetTypeInfo().IsNestedFamANDAssem;
 
-        public bool IsAbstract => typeInfo.IsAbstract;
+        public bool IsAbstract => typeInfo.IsAbstract && !IsStatic;
 
-        public bool IsSealed => typeInfo.IsSealed;
+        public bool IsSealed => typeInfo.IsSealed && !IsStatic;
 
         public bool IsStatic => typeInfo.IsAbstract && typeInfo.IsSealed;
 
