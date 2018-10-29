@@ -23,13 +23,30 @@ namespace AssemblyBrowser.ViewModel
                 parameter.Add("ref");
             }
 
-            parameter.Add(parameterInfo.Type);
+            parameter.Add(parameterInfo.Type + GetGenericParametersDeclaration(modifiersDelimiter));
             parameter.Add(parameterInfo.Name);
             if (parameterInfo.HasDefaultValue)
             {
                 parameter.Add(string.Format("={0}{1}", modifiersDelimiter, parameterInfo.DefaultValue.ToString()));
             }
             return string.Join(modifiersDelimiter, parameter);
+        }
+
+        protected string GetGenericParametersDeclaration(string parametersDelimiter)
+        {
+            if (parameterInfo.IsGeneric)
+            {
+                List<string> parameters = new List<string>();
+                foreach (AssemblyGenericParameterInfo genericParameter in parameterInfo.GenericParameters)
+                {
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
+                }
+                return "<" + string.Join("," + parametersDelimiter, parameters) + ">";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public ParameterStringProcessor(AssemblyParameterInfo parameterInfo)
