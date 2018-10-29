@@ -9,6 +9,23 @@ namespace AssemblyBrowser.ViewModel
     {
         protected readonly AssemblyDatatypeInfo datatypeInfo;
 
+        protected string GetGenericParametersDeclaration(string modifiersDelimiter)
+        {
+            if (datatypeInfo.IsGeneric)
+            {
+                List<string> parameters = new List<string>();
+                foreach (AssemblyGenericParameterInfo genericParameter in datatypeInfo.GenericParamters)
+                {
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(modifiersDelimiter));
+                }
+                return "<" + string.Join("," + modifiersDelimiter, parameters) + ">";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public string GetDeclaration(string modifiersDelimiter)
         {
             List<string> modifiers = new List<string>
@@ -45,7 +62,7 @@ namespace AssemblyBrowser.ViewModel
                 modifiers.Add("enum");
             }
 
-            modifiers.Add(datatypeInfo.Name);
+            modifiers.Add(datatypeInfo.Name + GetGenericParametersDeclaration(modifiersDelimiter));
 
             if (datatypeInfo.IsClass)
             {

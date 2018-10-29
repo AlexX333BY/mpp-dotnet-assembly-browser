@@ -47,6 +47,7 @@
     <Compile Include="AssemblyStringProcessor.cs" />
     <Compile Include="DatatypeStringProcessor.cs" />
     <Compile Include="FieldStringProcessor.cs" />
+    <Compile Include="GenericParameterStringProcessor.cs" />
     <Compile Include="IDeclaredElementStringProcessor.cs" />
     <Compile Include="MethodStringProcessor.cs" />
     <Compile Include="NamespaceStringProcessor.cs" />

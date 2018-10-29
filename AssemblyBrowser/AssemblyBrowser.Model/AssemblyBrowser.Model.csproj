@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="AssemblyDatatypeInfo.cs" />
     <Compile Include="AssemblyFieldInfo.cs" />
+    <Compile Include="AssemblyGenericParameterInfo.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="AssemblyMethodInfo.cs" />
     <Compile Include="AssemblyNamespaceInfo.cs" />

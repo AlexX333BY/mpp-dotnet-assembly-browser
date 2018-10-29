@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System;
+using System.Text.RegularExpressions;
 
 namespace AssemblyBrowser.ViewModel
 {
@@ -93,16 +94,8 @@ namespace AssemblyBrowser.ViewModel
                 }
                 else
                 {
-                    List<string> splittedDatatype = new List<string>(value.Split(' '));
-                    int indexOfInheritance = splittedDatatype.LastIndexOf(":");
-                    if (indexOfInheritance == -1)
-                    {
-                        selectedDatatype = splittedDatatype[splittedDatatype.Count - 1];
-                    }
-                    else
-                    {
-                        selectedDatatype = splittedDatatype[indexOfInheritance - 1];
-                    }
+                    selectedDatatype = new Regex(@"(?<" + nameof(selectedDatatype) + @">[\w`]+)(?:\<.+\>)?(?:\s+\:\s+.+)?$", RegexOptions.Compiled)
+                        .Matches(value)[0].Groups[nameof(selectedDatatype)].Value;
                 }
                 OnPropertyChanged(nameof(Fields));
                 OnPropertyChanged(nameof(Properties));

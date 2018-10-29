@@ -11,6 +11,7 @@ namespace AssemblyBrowser.Model
         protected List<AssemblyPropertyInfo> datatypeProperties;
         protected List<AssemblyMethodInfo> datatypeMethods;
         protected List<AssemblyDatatypeInfo> interfaces;
+        protected List<AssemblyGenericParameterInfo> genericParameters;
 
         public List<AssemblyFieldInfo> Fields
         {
@@ -109,6 +110,24 @@ namespace AssemblyBrowser.Model
 
         public bool IsClass => typeInfo.IsClass && !IsInterface;
 
+        public bool IsGeneric => typeInfo.IsGenericType;
+
+        public List<AssemblyGenericParameterInfo> GenericParamters
+        {
+            get
+            {
+                if (genericParameters == null)
+                {
+                    genericParameters = new List<AssemblyGenericParameterInfo>();
+                    foreach (Type type in typeInfo.GetGenericArguments())
+                    {
+                        genericParameters.Add(new AssemblyGenericParameterInfo(type));
+                    }
+                }
+                return new List<AssemblyGenericParameterInfo>(genericParameters);
+            }
+        }
+
         public AssemblyDatatypeInfo(Type typeInfo)
         {
             this.typeInfo = typeInfo ?? throw new ArgumentException("Type info shouldn't be null");
@@ -116,6 +135,7 @@ namespace AssemblyBrowser.Model
             datatypeProperties = null;
             datatypeMethods = null;
             interfaces = null;
+            genericParameters = null;
         }
     }
 }
