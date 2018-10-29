@@ -43,8 +43,8 @@ namespace AssemblyBrowser.ViewModel
                 modifiers.Add("virtual");
             }
 
-            modifiers.Add(methodInfo.ReturnType);
-            modifiers.Add(methodInfo.Name + GetGenericParametersDeclaration(modifiersDelimiter));
+            modifiers.Add(methodInfo.ReturnType + GetReturnTypeGenericParametersDeclaration(modifiersDelimiter));
+            modifiers.Add(methodInfo.Name + GetMethodGenericParametersDeclaration(modifiersDelimiter));
             return string.Format("{0}({1})", string.Join(modifiersDelimiter, modifiers), CreateParameters(modifiersDelimiter));
         }
 
@@ -58,12 +58,29 @@ namespace AssemblyBrowser.ViewModel
             return string.Join(string.Format(",{0}", modifiersDelimiter), parameters);
         }
 
-        protected string GetGenericParametersDeclaration(string parametersDelimiter)
+        protected string GetMethodGenericParametersDeclaration(string parametersDelimiter)
         {
-            if (methodInfo.IsGeneric)
+            if (methodInfo.IsMethodGeneric)
             {
                 List<string> parameters = new List<string>();
-                foreach (AssemblyGenericParameterInfo genericParameter in methodInfo.GenericParameters)
+                foreach (AssemblyGenericParameterInfo genericParameter in methodInfo.MethodGenericParameters)
+                {
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
+                }
+                return "<" + string.Join("," + parametersDelimiter, parameters) + ">";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        protected string GetReturnTypeGenericParametersDeclaration(string parametersDelimiter)
+        {
+            if (methodInfo.IsReturnTypeGeneric)
+            {
+                List<string> parameters = new List<string>();
+                foreach (AssemblyGenericParameterInfo genericParameter in methodInfo.ReturnTypeGenericParameters)
                 {
                     parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
                 }

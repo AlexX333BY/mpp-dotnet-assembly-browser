@@ -5,10 +5,11 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyMethodInfo : IAccessable, IGenericable
+    public class AssemblyMethodInfo : IAccessable
     {
         protected List<AssemblyParameterInfo> methodParameters;
-        protected List<AssemblyGenericParameterInfo> genericParameters;
+        protected List<AssemblyGenericParameterInfo> methodGenericParameters;
+        protected List<AssemblyGenericParameterInfo> returnTypeGenericParameters;
         protected readonly MethodInfo methodInfo;
 
         public string Name => methodInfo.Name;
@@ -57,21 +58,39 @@ namespace AssemblyBrowser.Model
 
         public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden && !methodInfo.DeclaringType.IsInterface;
 
-        public bool IsGeneric => methodInfo.IsGenericMethod;
+        public bool IsMethodGeneric => methodInfo.IsGenericMethod;
 
-        public List<AssemblyGenericParameterInfo> GenericParameters
+        public List<AssemblyGenericParameterInfo> MethodGenericParameters
         {
             get
             {
-                if (genericParameters == null)
+                if (methodGenericParameters == null)
                 {
-                    genericParameters = new List<AssemblyGenericParameterInfo>();
+                    methodGenericParameters = new List<AssemblyGenericParameterInfo>();
                     foreach (Type type in methodInfo.GetGenericArguments())
                     {
-                        genericParameters.Add(new AssemblyGenericParameterInfo(type));
+                        methodGenericParameters.Add(new AssemblyGenericParameterInfo(type));
                     }
                 }
-                return new List<AssemblyGenericParameterInfo>(genericParameters);
+                return new List<AssemblyGenericParameterInfo>(methodGenericParameters);
+            }
+        }
+
+        public bool IsReturnTypeGeneric => methodInfo.ReturnType.IsGenericType;
+
+        public List<AssemblyGenericParameterInfo> ReturnTypeGenericParameters
+        {
+            get
+            {
+                if (returnTypeGenericParameters == null)
+                {
+                    returnTypeGenericParameters = new List<AssemblyGenericParameterInfo>();
+                    foreach (Type type in methodInfo.ReturnType.GetGenericArguments())
+                    {
+                        returnTypeGenericParameters.Add(new AssemblyGenericParameterInfo(type));
+                    }
+                }
+                return new List<AssemblyGenericParameterInfo>(returnTypeGenericParameters);
             }
         }
 
@@ -79,7 +98,8 @@ namespace AssemblyBrowser.Model
         {
             this.methodInfo = methodInfo ?? throw new ArgumentException("Method info shouldn't be null");
             methodParameters = null;
-            genericParameters = null;
+            methodGenericParameters = null;
+            returnTypeGenericParameters = null;
         }
     }
 }
