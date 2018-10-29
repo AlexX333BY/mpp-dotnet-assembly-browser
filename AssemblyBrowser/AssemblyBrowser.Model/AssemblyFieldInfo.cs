@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyFieldInfo : IAccessable
+    public class AssemblyFieldInfo : IAccessable, IGenericable
     {
         protected readonly FieldInfo fieldInfo;
+        protected List<AssemblyGenericParameterInfo> genericParameters;
 
         public string Name => fieldInfo.Name;
 
@@ -45,9 +47,28 @@ namespace AssemblyBrowser.Model
             }
         }
 
+        public bool IsGeneric => fieldInfo.FieldType.IsGenericType;
+
+        public List<AssemblyGenericParameterInfo> GenericParameters
+        {
+            get
+            {
+                if (genericParameters == null)
+                {
+                    genericParameters = new List<AssemblyGenericParameterInfo>();
+                    foreach (Type type in fieldInfo.FieldType.GetGenericArguments())
+                    {
+                        genericParameters.Add(new AssemblyGenericParameterInfo(type));
+                    }
+                }
+                return new List<AssemblyGenericParameterInfo>(genericParameters);
+            }
+        }
+
         public AssemblyFieldInfo(FieldInfo fieldInfo)
         {
             this.fieldInfo = fieldInfo ?? throw new ArgumentException("Field info shouldn't be null");
+            genericParameters = null;
         }
     }
 }

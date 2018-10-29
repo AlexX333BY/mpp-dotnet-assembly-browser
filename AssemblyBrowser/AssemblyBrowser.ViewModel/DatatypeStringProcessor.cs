@@ -14,7 +14,7 @@ namespace AssemblyBrowser.ViewModel
             if (datatypeInfo.IsGeneric)
             {
                 List<string> parameters = new List<string>();
-                foreach (AssemblyGenericParameterInfo genericParameter in datatypeInfo.GenericParamters)
+                foreach (AssemblyGenericParameterInfo genericParameter in datatypeInfo.GenericParameters)
                 {
                     parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(modifiersDelimiter));
                 }

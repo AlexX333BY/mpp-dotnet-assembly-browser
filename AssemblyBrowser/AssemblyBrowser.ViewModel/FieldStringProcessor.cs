@@ -7,6 +7,23 @@ namespace AssemblyBrowser.ViewModel
     {
         protected readonly AssemblyFieldInfo fieldInfo;
 
+        protected string GetGenericParametersDeclaration(string modifiersDelimiter)
+        {
+            if (fieldInfo.IsGeneric)
+            {
+                List<string> parameters = new List<string>();
+                foreach (AssemblyGenericParameterInfo genericParameter in fieldInfo.GenericParameters)
+                {
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(modifiersDelimiter));
+                }
+                return "<" + string.Join("," + modifiersDelimiter, parameters) + ">";
+            }
+            else
+            {
+                return "";
+            }
+        }
+
         public string GetDeclaration(string modifiersDelimiter)
         {
             List<string> modifiers = new List<string>
@@ -31,7 +48,7 @@ namespace AssemblyBrowser.ViewModel
                 modifiers.Add("volatile");
             }
 
-            modifiers.Add(fieldInfo.Type);
+            modifiers.Add(fieldInfo.Type + GetGenericParametersDeclaration(modifiersDelimiter));
             modifiers.Add(fieldInfo.Name);
             return string.Join(modifiersDelimiter, modifiers);
         }

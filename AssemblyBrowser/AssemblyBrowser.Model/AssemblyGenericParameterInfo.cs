@@ -30,15 +30,7 @@ namespace AssemblyBrowser.Model
 
         public AssemblyGenericParameterInfo(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentException("Type shouldn't be null");
-            }
-            if (!type.IsGenericParameter)
-            {
-                throw new ArgumentException("Type is not generic parameter");
-            }
-            typeInfo = type;
+            typeInfo = type ?? throw new ArgumentException("Type shouldn't be null");
         }
     }
 }
