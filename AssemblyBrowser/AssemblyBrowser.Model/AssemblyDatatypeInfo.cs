@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyDatatypeInfo : IAccessable
+    public class AssemblyDatatypeInfo : IAccessable, IGenericable
     {
         protected readonly Type typeInfo;
         protected List<AssemblyFieldInfo> datatypeFields;
@@ -112,7 +112,7 @@ namespace AssemblyBrowser.Model
 
         public bool IsGeneric => typeInfo.IsGenericType;
 
-        public List<AssemblyGenericParameterInfo> GenericParamters
+        public List<AssemblyGenericParameterInfo> GenericParameters
         {
             get
             {
