@@ -94,7 +94,7 @@ namespace AssemblyBrowser.ViewModel
                 }
                 else
                 {
-                    selectedDatatype = new Regex(@"(?<" + nameof(selectedDatatype) + @">[\w`]+)(?:\<.+\>)?(?:\s+\:\s+.+)?$", RegexOptions.Compiled)
+                    selectedDatatype = new Regex(@"^(?:\w+\s+)*(?<" + nameof(selectedDatatype) + @">[\w`]+)(?:\<.+\>)?(?:\s+\:\s+.+)?$", RegexOptions.Compiled)
                         .Matches(value)[0].Groups[nameof(selectedDatatype)].Value;
                 }
                 OnPropertyChanged(nameof(Fields));
