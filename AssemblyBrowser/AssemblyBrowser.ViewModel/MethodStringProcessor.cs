@@ -44,7 +44,7 @@ namespace AssemblyBrowser.ViewModel
             }
 
             modifiers.Add(methodInfo.ReturnType);
-            modifiers.Add(methodInfo.Name);
+            modifiers.Add(methodInfo.Name + GetGenericParametersDeclaration(modifiersDelimiter));
             return string.Format("{0}({1})", string.Join(modifiersDelimiter, modifiers), CreateParameters(modifiersDelimiter));
         }
 
@@ -56,6 +56,23 @@ namespace AssemblyBrowser.ViewModel
                 parameters.Add(new ParameterStringProcessor(parameterInfo).GetDeclaration(modifiersDelimiter));
             }
             return string.Join(string.Format(",{0}", modifiersDelimiter), parameters);
+        }
+
+        protected string GetGenericParametersDeclaration(string parametersDelimiter)
+        {
+            if (methodInfo.IsGeneric)
+            {
+                List<string> parameters = new List<string>();
+                foreach (AssemblyGenericParameterInfo genericParameter in methodInfo.GenericParameters)
+                {
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
+                }
+                return "<" + string.Join("," + parametersDelimiter, parameters) + ">";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public MethodStringProcessor(AssemblyMethodInfo methodInfo)

@@ -5,9 +5,10 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyMethodInfo : IAccessable
+    public class AssemblyMethodInfo : IAccessable, IGenericable
     {
         protected List<AssemblyParameterInfo> methodParameters;
+        protected List<AssemblyGenericParameterInfo> genericParameters;
         protected readonly MethodInfo methodInfo;
 
         public string Name => methodInfo.Name;
@@ -56,10 +57,29 @@ namespace AssemblyBrowser.Model
 
         public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden && !methodInfo.DeclaringType.IsInterface;
 
+        public bool IsGeneric => methodInfo.IsGenericMethod;
+
+        public List<AssemblyGenericParameterInfo> GenericParameters
+        {
+            get
+            {
+                if (genericParameters == null)
+                {
+                    genericParameters = new List<AssemblyGenericParameterInfo>();
+                    foreach (Type type in methodInfo.GetGenericArguments())
+                    {
+                        genericParameters.Add(new AssemblyGenericParameterInfo(type));
+                    }
+                }
+                return new List<AssemblyGenericParameterInfo>(genericParameters);
+            }
+        }
+
         public AssemblyMethodInfo(MethodInfo methodInfo)
         {
             this.methodInfo = methodInfo ?? throw new ArgumentException("Method info shouldn't be null");
             methodParameters = null;
+            genericParameters = null;
         }
     }
 }

@@ -7,16 +7,16 @@ namespace AssemblyBrowser.ViewModel
     {
         protected readonly AssemblyFieldInfo fieldInfo;
 
-        protected string GetGenericParametersDeclaration(string modifiersDelimiter)
+        protected string GetGenericParametersDeclaration(string parametersDelimiter)
         {
             if (fieldInfo.IsGeneric)
             {
                 List<string> parameters = new List<string>();
                 foreach (AssemblyGenericParameterInfo genericParameter in fieldInfo.GenericParameters)
                 {
-                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(modifiersDelimiter));
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
                 }
-                return "<" + string.Join("," + modifiersDelimiter, parameters) + ">";
+                return "<" + string.Join("," + parametersDelimiter, parameters) + ">";
             }
             else
             {

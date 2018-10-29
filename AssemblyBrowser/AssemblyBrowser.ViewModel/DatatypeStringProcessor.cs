@@ -9,16 +9,16 @@ namespace AssemblyBrowser.ViewModel
     {
         protected readonly AssemblyDatatypeInfo datatypeInfo;
 
-        protected string GetGenericParametersDeclaration(string modifiersDelimiter)
+        protected string GetGenericParametersDeclaration(string parametersDelimiter)
         {
             if (datatypeInfo.IsGeneric)
             {
                 List<string> parameters = new List<string>();
                 foreach (AssemblyGenericParameterInfo genericParameter in datatypeInfo.GenericParameters)
                 {
-                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(modifiersDelimiter));
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
                 }
-                return "<" + string.Join("," + modifiersDelimiter, parameters) + ">";
+                return "<" + string.Join("," + parametersDelimiter, parameters) + ">";
             }
             else
             {
