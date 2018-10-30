@@ -38,7 +38,7 @@ namespace AssemblyBrowser.ViewModel
                 modifiers.Add("virtual");
             }
 
-            modifiers.Add(propertyInfo.Type);
+            modifiers.Add(propertyInfo.Type + GetReturnTypeGenericParametersDeclaration(delimiter));
             modifiers.Add(propertyInfo.Name);
 
             if (prefixAccessModifier == "")
@@ -61,6 +61,23 @@ namespace AssemblyBrowser.ViewModel
             }
 
             return string.Join(delimiter, modifiers);
+        }
+
+        protected string GetReturnTypeGenericParametersDeclaration(string genericParametersDelimiter)
+        {
+            if (propertyInfo.IsReturnTypeGeneric)
+            {
+                List<string> parameters = new List<string>();
+                foreach (AssemblyGenericParameterInfo genericParameter in propertyInfo.ReturnTypeGenericParameters)
+                {
+                    parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(genericParametersDelimiter));
+                }
+                return "<" + string.Join("," + genericParametersDelimiter, parameters) + ">";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         protected string CreatePropertyPrefixAccessModifier(AssemblyPropertyInfo propertyInfo)

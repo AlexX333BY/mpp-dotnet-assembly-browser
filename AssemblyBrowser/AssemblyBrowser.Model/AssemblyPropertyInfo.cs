@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyPropertyInfo
+    public class AssemblyPropertyInfo : IGenericReturn
     {
         protected readonly PropertyInfo propertyInfo;
+        protected List<AssemblyGenericParameterInfo> returnTypeGenericParameters;
 
         public string Name => propertyInfo.Name;
 
@@ -117,9 +119,28 @@ namespace AssemblyBrowser.Model
             }
         }
 
+        public bool IsReturnTypeGeneric => propertyInfo.PropertyType.IsGenericType;
+
+        public List<AssemblyGenericParameterInfo> ReturnTypeGenericParameters
+        {
+            get
+            {
+                if (returnTypeGenericParameters == null)
+                {
+                    returnTypeGenericParameters = new List<AssemblyGenericParameterInfo>();
+                    foreach (Type type in propertyInfo.PropertyType.GetGenericArguments())
+                    {
+                        returnTypeGenericParameters.Add(new AssemblyGenericParameterInfo(type));
+                    }
+                }
+                return new List<AssemblyGenericParameterInfo>(returnTypeGenericParameters);
+            }
+        }
+
         public AssemblyPropertyInfo(PropertyInfo propertyInfo)
         {
             this.propertyInfo = propertyInfo ?? throw new ArgumentException("Property info shouldn't be null");
+            returnTypeGenericParameters = null;
         }
     }
 }
