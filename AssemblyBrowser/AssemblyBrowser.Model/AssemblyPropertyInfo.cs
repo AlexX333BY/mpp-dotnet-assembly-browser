@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyPropertyInfo : IGenericReturn
+    public class AssemblyPropertyInfo : IReturnTypeGenericable
     {
         protected readonly PropertyInfo propertyInfo;
         protected List<AssemblyGenericParameterInfo> returnTypeGenericParameters;

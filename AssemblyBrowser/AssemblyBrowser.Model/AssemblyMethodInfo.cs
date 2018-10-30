@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyMethodInfo : IAccessable, IGenericParametrized, IGenericReturn
+    public class AssemblyMethodInfo : IAccessable, IGenericParametrizable, IReturnTypeGenericable
     {
         protected List<AssemblyParameterInfo> methodParameters;
         protected List<AssemblyGenericParameterInfo> methodGenericParameters;

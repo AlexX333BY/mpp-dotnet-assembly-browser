@@ -2,7 +2,7 @@
 
 namespace AssemblyBrowser.Model
 {
-    public interface IGenericParametrized
+    public interface IGenericParametrizable
     {
         bool IsGenericParametrized
         { get; }

@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyFieldInfo : IAccessable, IGenericParametrized
+    public class AssemblyFieldInfo : IAccessable, IGenericParametrizable
     {
         protected readonly FieldInfo fieldInfo;
         protected List<AssemblyGenericParameterInfo> genericParameters;

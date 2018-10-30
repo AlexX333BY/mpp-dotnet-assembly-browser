@@ -2,7 +2,7 @@
 
 namespace AssemblyBrowser.Model
 {
-    public interface IGenericReturn
+    public interface IReturnTypeGenericable
     {
         bool IsReturnTypeGeneric
         { get; }
