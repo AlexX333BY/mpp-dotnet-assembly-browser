@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionUnitTest.cs" />
     <Compile Include="SimpleTypeUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AssemblyBrowser.Model.UnitTests.ExtensionMethodsAssembly\AssemblyBrowser.Model.UnitTests.ExtensionMethodsAssembly.csproj">
+      <Project>{54aa4420-bca4-437d-b8e3-85531d7f6ab8}</Project>
+      <Name>AssemblyBrowser.Model.UnitTests.ExtensionMethodsAssembly</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AssemblyBrowser.Model.UnitTests.TestAssembly\AssemblyBrowser.Model.UnitTests.TestAssembly.csproj">
       <Project>{982fb97f-f55e-4c68-a1ae-90d64e5dead6}</Project>
       <Name>AssemblyBrowser.Model.UnitTests.TestAssembly</Name>
