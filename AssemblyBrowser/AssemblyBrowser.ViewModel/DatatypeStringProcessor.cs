@@ -163,6 +163,17 @@ namespace AssemblyBrowser.ViewModel
                     // handling error of loading non-available types
                 }
             }
+            foreach (AssemblyMethodInfo methodInfo in datatypeInfo.ExtensionMethods)
+            {
+                try
+                {
+                    methods.Add(new MethodStringProcessor(methodInfo).GetDeclaration(modifiersDelimiter));
+                }
+                catch (FileNotFoundException)
+                {
+                    // handling error of loading non-available types
+                }
+            }
             return methods;
         }
 

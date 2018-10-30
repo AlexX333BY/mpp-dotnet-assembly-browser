@@ -55,6 +55,10 @@ namespace AssemblyBrowser.ViewModel
             {
                 parameters.Add(new ParameterStringProcessor(parameterInfo).GetDeclaration(modifiersDelimiter));
             }
+            if (methodInfo.IsExtensionMethod)
+            {
+                parameters[0] = parameters[0].Insert(0, "this" + modifiersDelimiter);
+            }
             return string.Join(string.Format(",{0}", modifiersDelimiter), parameters);
         }
 

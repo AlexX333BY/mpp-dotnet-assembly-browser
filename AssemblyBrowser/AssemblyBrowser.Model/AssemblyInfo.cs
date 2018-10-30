@@ -1,12 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
     public class AssemblyInfo
     {
         protected readonly Dictionary<string, AssemblyNamespaceInfo> namespaces;
+
+        protected Dictionary<Type, List<MethodInfo>> CollectExtensionMethods(Type[] types)
+        {
+            var result = new Dictionary<Type, List<MethodInfo>>();
+            Type extendedType;
+            foreach (Type type in types)
+            {
+                if (type.IsDefined(typeof(ExtensionAttribute), true))
+                {
+                    foreach (MethodInfo method in type.GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
+                    {
+                        if (method.IsDefined(typeof(ExtensionAttribute), true))
+                        {
+                            extendedType = method.GetParameters()[0].ParameterType;
+                            if (!result.TryGetValue(extendedType, out List<MethodInfo> methods))
+                            {
+                                methods = new List<MethodInfo>();
+                                result[extendedType] = methods;
+                            }
+                            methods.Add(method);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
 
         public Dictionary<string, AssemblyNamespaceInfo> Namespaces => new Dictionary<string, AssemblyNamespaceInfo>(namespaces);
 
@@ -34,6 +61,7 @@ namespace AssemblyBrowser.Model
                 }
                 types = typeList.ToArray();
             }
+            Dictionary<Type, List<MethodInfo>> extensionMethods = CollectExtensionMethods(types);
             foreach (Type type in types)
             {
                 namespaceName = type.Namespace;
@@ -44,7 +72,11 @@ namespace AssemblyBrowser.Model
                         assemblyNamespace = new AssemblyNamespaceInfo(namespaceName);
                         namespaces.Add(namespaceName, assemblyNamespace);
                     }
-                    assemblyNamespace.AddDatatype(type);
+                    if (!extensionMethods.TryGetValue(type, out List<MethodInfo> typeExtensionMethods))
+                    {
+                        typeExtensionMethods = null;
+                    }
+                    assemblyNamespace.AddDatatype(type, typeExtensionMethods);
                 }
             }
         }

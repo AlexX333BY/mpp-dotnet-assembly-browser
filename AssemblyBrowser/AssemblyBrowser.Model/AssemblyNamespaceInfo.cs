@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace AssemblyBrowser.Model
 {
@@ -12,9 +13,9 @@ namespace AssemblyBrowser.Model
 
         public List<AssemblyDatatypeInfo> Datatypes => new List<AssemblyDatatypeInfo>(datatypes);
 
-        protected internal void AddDatatype(Type datatype)
+        protected internal void AddDatatype(Type datatype, List<MethodInfo> typeExtensionMethods)
         {
-            datatypes.Add(new AssemblyDatatypeInfo(datatype));
+            datatypes.Add(new AssemblyDatatypeInfo(datatype, typeExtensionMethods));
         }
 
         public AssemblyNamespaceInfo(string name)

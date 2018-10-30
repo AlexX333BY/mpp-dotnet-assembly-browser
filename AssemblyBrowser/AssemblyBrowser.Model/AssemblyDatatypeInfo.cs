@@ -12,6 +12,7 @@ namespace AssemblyBrowser.Model
         protected List<AssemblyMethodInfo> datatypeMethods;
         protected List<AssemblyDatatypeInfo> interfaces;
         protected List<AssemblyGenericParameterInfo> genericParameters;
+        protected List<AssemblyMethodInfo> extensionMethods;
 
         public List<AssemblyFieldInfo> Fields
         {
@@ -52,11 +53,13 @@ namespace AssemblyBrowser.Model
                 if (datatypeMethods == null)
                 {
                     datatypeMethods = new List<AssemblyMethodInfo>();
+                    AssemblyMethodInfo addMethodInfo;
                     foreach (MethodInfo method in typeInfo.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                     {
-                        if (!method.Name.StartsWith("get_") && !method.Name.StartsWith("set_"))
+                        addMethodInfo = new AssemblyMethodInfo(method);
+                        if (!addMethodInfo.Name.StartsWith("get_") && !addMethodInfo.Name.StartsWith("set_") && !addMethodInfo.IsExtensionMethod)
                         {
-                            datatypeMethods.Add(new AssemblyMethodInfo(method));
+                            datatypeMethods.Add(addMethodInfo);
                         }
                     }
                 }
@@ -128,7 +131,34 @@ namespace AssemblyBrowser.Model
             }
         }
 
-        public AssemblyDatatypeInfo(Type typeInfo)
+        public List<AssemblyMethodInfo> ExtensionMethods
+        {
+            get
+            {
+                if (extensionMethods == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return new List<AssemblyMethodInfo>(extensionMethods);
+                }
+            }
+        }
+
+        protected void SetExtensionMethods(List<MethodInfo> rawExtensionMethods)
+        {
+            extensionMethods = new List<AssemblyMethodInfo>();
+            if (rawExtensionMethods != null)
+            {
+                foreach (MethodInfo methodInfo in rawExtensionMethods)
+                {
+                    extensionMethods.Add(new AssemblyMethodInfo(methodInfo));
+                }
+            }
+        }
+
+        public AssemblyDatatypeInfo(Type typeInfo, List<MethodInfo> extensionMethods = null)
         {
             this.typeInfo = typeInfo ?? throw new ArgumentException("Type info shouldn't be null");
             datatypeFields = null;
@@ -136,6 +166,7 @@ namespace AssemblyBrowser.Model
             datatypeMethods = null;
             interfaces = null;
             genericParameters = null;
+            SetExtensionMethods(extensionMethods);
         }
     }
 }

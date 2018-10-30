@@ -94,6 +94,8 @@ namespace AssemblyBrowser.Model
             }
         }
 
+        public bool IsExtensionMethod => methodInfo.IsDefined(typeof(ExtensionAttribute), true);
+
         public AssemblyMethodInfo(MethodInfo methodInfo)
         {
             this.methodInfo = methodInfo ?? throw new ArgumentException("Method info shouldn't be null");
