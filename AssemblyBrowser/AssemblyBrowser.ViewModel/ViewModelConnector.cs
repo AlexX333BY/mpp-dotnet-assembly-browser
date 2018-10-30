@@ -35,7 +35,7 @@ namespace AssemblyBrowser.ViewModel
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Assemblies|*.dll",
+                Filter = "Assemblies|*.dll;*.exe",
                 Title = "Select assembly",
                 Multiselect = false
             };
@@ -94,7 +94,7 @@ namespace AssemblyBrowser.ViewModel
                 }
                 else
                 {
-                    selectedDatatype = new Regex(@"^(?:\w+\s+)*(?<" + nameof(selectedDatatype) + @">[\w`]+)(?:\<.+\>)?(?:\s*\:\s*.+)?$", RegexOptions.Compiled)
+                    selectedDatatype = new Regex(@"^\s*(?:\w+\s+)*(?<" + nameof(selectedDatatype) + @">[\w`]+)(?:\<.+\>)?(?:\s*\:\s*.+)?$", RegexOptions.Compiled)
                         .Matches(value)[0].Groups[nameof(selectedDatatype)].Value;
                 }
                 OnPropertyChanged(nameof(Fields));
