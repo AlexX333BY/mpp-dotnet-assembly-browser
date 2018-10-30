@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyFieldInfo : IAccessable, IGenericable
+    public class AssemblyFieldInfo : IAccessable, IGenericParametrized
     {
         protected readonly FieldInfo fieldInfo;
         protected List<AssemblyGenericParameterInfo> genericParameters;
@@ -47,7 +47,7 @@ namespace AssemblyBrowser.Model
             }
         }
 
-        public bool IsGeneric => fieldInfo.FieldType.IsGenericType;
+        public bool IsGenericParametrized => fieldInfo.FieldType.IsGenericType;
 
         public List<AssemblyGenericParameterInfo> GenericParameters
         {

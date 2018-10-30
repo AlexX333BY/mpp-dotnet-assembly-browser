@@ -9,7 +9,7 @@ namespace AssemblyBrowser.ViewModel
 
         protected string GetGenericParametersDeclaration(string parametersDelimiter)
         {
-            if (fieldInfo.IsGeneric)
+            if (fieldInfo.IsGenericParametrized)
             {
                 List<string> parameters = new List<string>();
                 foreach (AssemblyGenericParameterInfo genericParameter in fieldInfo.GenericParameters)

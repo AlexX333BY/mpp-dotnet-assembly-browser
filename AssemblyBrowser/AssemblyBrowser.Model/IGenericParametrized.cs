@@ -2,9 +2,9 @@
 
 namespace AssemblyBrowser.Model
 {
-    public interface IGenericable
+    public interface IGenericParametrized
     {
-        bool IsGeneric
+        bool IsGenericParametrized
         { get; }
 
         List<AssemblyGenericParameterInfo> GenericParameters

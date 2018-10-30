@@ -34,7 +34,7 @@ namespace AssemblyBrowser.ViewModel
 
         protected string GetGenericParametersDeclaration(string parametersDelimiter)
         {
-            if (parameterInfo.IsGeneric)
+            if (parameterInfo.IsGenericParametrized)
             {
                 List<string> parameters = new List<string>();
                 foreach (AssemblyGenericParameterInfo genericParameter in parameterInfo.GenericParameters)

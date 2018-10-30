@@ -50,7 +50,8 @@
     <Compile Include="AssemblyParameterInfo.cs" />
     <Compile Include="AssemblyPropertyInfo.cs" />
     <Compile Include="IAccessable.cs" />
-    <Compile Include="IGenericable.cs" />
+    <Compile Include="IGenericParametrized.cs" />
+    <Compile Include="IGenericReturn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

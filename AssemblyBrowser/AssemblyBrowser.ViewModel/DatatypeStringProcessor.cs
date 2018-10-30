@@ -11,7 +11,7 @@ namespace AssemblyBrowser.ViewModel
 
         protected string GetGenericParametersDeclaration(string parametersDelimiter)
         {
-            if (datatypeInfo.IsGeneric)
+            if (datatypeInfo.IsGenericParametrized)
             {
                 List<string> parameters = new List<string>();
                 foreach (AssemblyGenericParameterInfo genericParameter in datatypeInfo.GenericParameters)

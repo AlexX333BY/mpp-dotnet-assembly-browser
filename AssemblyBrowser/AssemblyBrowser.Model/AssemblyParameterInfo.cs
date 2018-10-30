@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyParameterInfo : IGenericable
+    public class AssemblyParameterInfo : IGenericParametrized
     {
         protected readonly ParameterInfo parameterInfo;
         protected List<AssemblyGenericParameterInfo> genericParameters;
@@ -23,7 +23,7 @@ namespace AssemblyBrowser.Model
 
         public object DefaultValue => parameterInfo.DefaultValue;
 
-        public bool IsGeneric => parameterInfo.ParameterType.IsGenericType;
+        public bool IsGenericParametrized => parameterInfo.ParameterType.IsGenericType;
 
         public List<AssemblyGenericParameterInfo> GenericParameters
         {
