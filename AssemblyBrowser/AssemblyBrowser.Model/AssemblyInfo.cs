@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -21,13 +22,20 @@ namespace AssemblyBrowser.Model
                     {
                         if (method.IsDefined(typeof(ExtensionAttribute), true))
                         {
-                            extendedType = method.GetParameters()[0].ParameterType;
-                            if (!result.TryGetValue(extendedType, out List<MethodInfo> methods))
+                            try
                             {
-                                methods = new List<MethodInfo>();
-                                result[extendedType] = methods;
+                                extendedType = method.GetParameters()[0].ParameterType;
+                                if (!result.TryGetValue(extendedType, out List<MethodInfo> methods))
+                                {
+                                    methods = new List<MethodInfo>();
+                                    result[extendedType] = methods;
+                                }
+                                methods.Add(method);
                             }
-                            methods.Add(method);
+                            catch (FileNotFoundException)
+                            {
+                                // handle dependency file load error
+                            }
                         }
                     }
                 }
@@ -64,19 +72,26 @@ namespace AssemblyBrowser.Model
             Dictionary<Type, List<MethodInfo>> extensionMethods = CollectExtensionMethods(types);
             foreach (Type type in types)
             {
-                namespaceName = type.Namespace;
-                if (namespaceName != null)
+                try
                 {
-                    if (!namespaces.TryGetValue(namespaceName, out AssemblyNamespaceInfo assemblyNamespace))
+                    namespaceName = type.Namespace;
+                    if (namespaceName != null)
                     {
-                        assemblyNamespace = new AssemblyNamespaceInfo(namespaceName);
-                        namespaces.Add(namespaceName, assemblyNamespace);
+                        if (!namespaces.TryGetValue(namespaceName, out AssemblyNamespaceInfo assemblyNamespace))
+                        {
+                            assemblyNamespace = new AssemblyNamespaceInfo(namespaceName);
+                            namespaces.Add(namespaceName, assemblyNamespace);
+                        }
+                        if (!extensionMethods.TryGetValue(type, out List<MethodInfo> typeExtensionMethods))
+                        {
+                            typeExtensionMethods = null;
+                        }
+                        assemblyNamespace.AddDatatype(type, typeExtensionMethods);
                     }
-                    if (!extensionMethods.TryGetValue(type, out List<MethodInfo> typeExtensionMethods))
-                    {
-                        typeExtensionMethods = null;
-                    }
-                    assemblyNamespace.AddDatatype(type, typeExtensionMethods);
+                }
+                catch (FileNotFoundException)
+                {
+                    // handle dependency file load error
                 }
             }
         }
