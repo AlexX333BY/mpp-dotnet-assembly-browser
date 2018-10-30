@@ -64,10 +64,10 @@ namespace AssemblyBrowser.ViewModel
 
         protected string GetMethodGenericParametersDeclaration(string parametersDelimiter)
         {
-            if (methodInfo.IsMethodGeneric)
+            if (methodInfo.IsGenericParametrized)
             {
                 List<string> parameters = new List<string>();
-                foreach (AssemblyGenericParameterInfo genericParameter in methodInfo.MethodGenericParameters)
+                foreach (AssemblyGenericParameterInfo genericParameter in methodInfo.GenericParameters)
                 {
                     parameters.Add(new GenericParameterStringProcessor(genericParameter).GetDeclaration(parametersDelimiter));
                 }

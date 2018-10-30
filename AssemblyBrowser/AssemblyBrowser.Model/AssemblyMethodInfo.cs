@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace AssemblyBrowser.Model
 {
-    public class AssemblyMethodInfo : IAccessable
+    public class AssemblyMethodInfo : IAccessable, IGenericParametrized, IGenericReturn
     {
         protected List<AssemblyParameterInfo> methodParameters;
         protected List<AssemblyGenericParameterInfo> methodGenericParameters;
@@ -58,9 +58,9 @@ namespace AssemblyBrowser.Model
 
         public bool IsVirtual => methodInfo.IsVirtual && !methodInfo.IsFinal && !IsOverriden && !methodInfo.DeclaringType.IsInterface;
 
-        public bool IsMethodGeneric => methodInfo.IsGenericMethod;
+        public bool IsGenericParametrized => methodInfo.IsGenericMethod;
 
-        public List<AssemblyGenericParameterInfo> MethodGenericParameters
+        public List<AssemblyGenericParameterInfo> GenericParameters
         {
             get
             {
