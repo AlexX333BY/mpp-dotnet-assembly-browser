@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace AssemblyBrowser.Model
 {
@@ -21,9 +22,15 @@ namespace AssemblyBrowser.Model
                 if (datatypeFields == null)
                 {
                     datatypeFields = new List<AssemblyFieldInfo>();
+                    AssemblyFieldInfo fieldInfo;
+                    Regex backingFieldRegex = new Regex(@"^\<.*\>.*BackingField$", RegexOptions.Compiled);
                     foreach (FieldInfo field in typeInfo.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                     {
-                        datatypeFields.Add(new AssemblyFieldInfo(field));
+                        fieldInfo = new AssemblyFieldInfo(field);
+                        if (!backingFieldRegex.IsMatch(fieldInfo.Name))
+                        {
+                            datatypeFields.Add(fieldInfo);
+                        }
                     }
                 }
                 return new List<AssemblyFieldInfo>(datatypeFields);
